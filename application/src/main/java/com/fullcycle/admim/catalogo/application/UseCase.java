@@ -6,6 +6,6 @@ import com.fullcycle.admim.catalogo.domain.category.Category;
 public class UseCase {
 
     public Category execute(){
-        return new Category();
+        return null;
     }
 }
