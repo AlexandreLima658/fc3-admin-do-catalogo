@@ -1,7 +1,7 @@
 package com.fullcycle.admim.catalogo.application;
 
 
-import com.fullcycle.admim.catalogo.domain.Category;
+import com.fullcycle.admim.catalogo.domain.category.Category;
 
 public class UseCase {
 
