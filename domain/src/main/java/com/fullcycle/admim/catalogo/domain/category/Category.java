@@ -1,11 +1,11 @@
 package com.fullcycle.admim.catalogo.domain.category;
 
 import com.fullcycle.admim.catalogo.domain.AggregateRoot;
+import com.fullcycle.admim.catalogo.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 
 public class Category extends AggregateRoot<CategoryID> {
-
 
     private String name;
     private String description;
@@ -50,6 +50,11 @@ public class Category extends AggregateRoot<CategoryID> {
                 now,
                 null
         );
+    }
+
+    @Override
+    public void validate(final ValidationHandler handler) {
+        new CategoryValidator(this, handler).validate();
     }
 
     public CategoryID getId() {
