@@ -1,11 +1,8 @@
 package com.fullcycle.admim.catalogo.application;
 
 
-import com.fullcycle.admim.catalogo.domain.category.Category;
+public abstract class UseCase<IN, OUT> {
 
-public class UseCase {
+    public abstract OUT execute(IN anIn);
 
-    public Category execute(){
-        return null;
-    }
 }
