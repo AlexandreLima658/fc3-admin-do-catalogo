@@ -1,0 +1,13 @@
+package com.fullcycle.admim.catalogo.application.category.create;
+
+import com.fullcycle.admim.catalogo.domain.category.Category;
+import com.fullcycle.admim.catalogo.domain.category.CategoryID;
+
+public record CreateCategoryOutput(
+        CategoryID id
+) {
+
+    public static CreateCategoryOutput from(Category aCategory) {
+        return new CreateCategoryOutput(aCategory.getId());
+    }
+}

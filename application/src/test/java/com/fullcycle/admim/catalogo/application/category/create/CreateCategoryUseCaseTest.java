@@ -1,6 +1,5 @@
 package com.fullcycle.admim.catalogo.application.category.create;
 
-import com.fullcycle.admim.catalogo.domain.category.Category;
 import com.fullcycle.admim.catalogo.domain.category.CategoryGateway;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,17 +25,17 @@ public class CreateCategoryUseCaseTest {
                 expectedIsActive
         );
 
-        final var categoryGateway = Mockito.mock(CategoryGateway.class);
+        final CategoryGateway categoryGateway = Mockito.mock(CategoryGateway.class);
 
         Mockito.when(categoryGateway.create(Mockito.any()))
                 .thenAnswer(returnsFirstArg());
 
-        final var useCase = new CreateCategoryUseCase(categoryGateway);
+        final var useCase = new DefaultCreateCategoryUseCase(categoryGateway);
 
         final var actualOutput = useCase.execute(aCommand);
 
         Assertions.assertNotNull(actualOutput);
-        Assertions.assertNotNull(actualOutput.getId());
+        Assertions.assertNotNull(actualOutput.id());
 
         Mockito.verify(categoryGateway, Mockito.times(1))
                 .create(Mockito.argThat(aCategory -> {
