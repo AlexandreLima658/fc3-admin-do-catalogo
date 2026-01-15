@@ -4,9 +4,13 @@ import com.fullcycle.admim.catalogo.domain.category.Category;
 import com.fullcycle.admim.catalogo.domain.category.CategoryGateway;
 import com.fullcycle.admim.catalogo.domain.validation.handler.Notification;
 import com.fullcycle.admim.catalogo.domain.validation.handler.ThrowsValidationHandler;
+import io.vavr.API;
 import io.vavr.control.Either;
 
 import java.util.Objects;
+
+import static io.vavr.API.Left;
+import static io.vavr.API.Try;
 
 public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase {
 
@@ -32,10 +36,13 @@ public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase {
 
         aCategory.validate(notification);
 
-        if (notification.hasError()) {
-
-        }
-
-        return CreateCategoryOutput.from(categoryGateway.create(aCategory));
+        return notification.hasError() ? Left(notification) : create(aCategory);
     }
+
+    private Either<Notification, CreateCategoryOutput> create(final Category aCategory) {
+        return Try(() -> this.categoryGateway.create(aCategory))
+                .toEither()
+                .bimap(Notification::create, CreateCategoryOutput::from);
+    }
+
 }
