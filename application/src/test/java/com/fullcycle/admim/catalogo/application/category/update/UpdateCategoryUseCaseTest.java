@@ -3,7 +3,6 @@ package com.fullcycle.admim.catalogo.application.category.update;
 
 import com.fullcycle.admim.catalogo.domain.category.Category;
 import com.fullcycle.admim.catalogo.domain.category.CategoryGateway;
-import io.vavr.API;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +39,7 @@ public class UpdateCategoryUseCaseTest {
         final var expectedIsActive =  true;
         final var expectedId = aCategory.getId();
 
-        final var aCommand = UpdatedCategoryCommand.with(
+        final var aCommand = UpdateCategoryCommand.with(
                 expectedId.getValue(),
                 expectedName,
                 expectedDescription,
