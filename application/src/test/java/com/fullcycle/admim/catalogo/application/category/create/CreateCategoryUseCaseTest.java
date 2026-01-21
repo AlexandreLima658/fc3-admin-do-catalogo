@@ -2,6 +2,7 @@ package com.fullcycle.admim.catalogo.application.category.create;
 
 import com.fullcycle.admim.catalogo.domain.category.CategoryGateway;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,6 +22,11 @@ public class CreateCategoryUseCaseTest {
 
     @Mock
     private CategoryGateway categoryGateway;
+
+    @BeforeEach
+    public void clenUp(){
+        Mockito.reset(categoryGateway);
+    }
 
 
     @Test
