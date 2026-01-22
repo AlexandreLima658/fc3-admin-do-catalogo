@@ -1,4 +1,4 @@
-package com.fullcycle.admim.catalogo.application.category.retrieve;
+package com.fullcycle.admim.catalogo.application.category.retrieve.get;
 
 
 import com.fullcycle.admim.catalogo.domain.category.Category;
@@ -52,16 +52,15 @@ public class GetCategoryByIdUseCaseTest {
         Assertions.assertEquals(expectedDescription, actualCategory.description());
         Assertions.assertEquals(expectedIsActive, actualCategory.isActive());
         Assertions.assertEquals(aCategory.getCreatedAt(), actualCategory.createdAt());
-        Assertions.assertEquals(aCategory.getUpdatedAt(), actualCategory.upatedAt());
+        Assertions.assertEquals(aCategory.getUpdatedAt(), actualCategory.updatedAt());
         Assertions.assertEquals(aCategory.getDeletedAt(), actualCategory.deletedAt());
-
 
     }
 
     @Test
     public void givenAInvalidId_whenCallsGetCategory_shouldReturnNotFound(){
 
-        final var expectedErrorMessage = "Gateway error!";
+        final var expectedErrorMessage = "Category with ID 123 was not found";
         final var expectedId = CategoryID.from("123");
 
         Mockito.when(categoryGateway.findById(Mockito.eq(expectedId)))
@@ -72,7 +71,7 @@ public class GetCategoryByIdUseCaseTest {
                 () -> useCase.execute(expectedId.getValue())
         );
 
-        Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
 
     }
 
