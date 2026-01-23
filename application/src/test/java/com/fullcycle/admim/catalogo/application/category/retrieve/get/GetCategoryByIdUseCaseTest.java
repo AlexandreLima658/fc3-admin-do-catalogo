@@ -71,7 +71,7 @@ public class GetCategoryByIdUseCaseTest {
                 () -> useCase.execute(expectedId.getValue())
         );
 
-        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
 
     }
 
