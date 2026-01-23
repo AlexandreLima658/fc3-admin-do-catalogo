@@ -2,6 +2,8 @@ name: Ci Pipeline
 
 on:
   push:
+    branches:
+      - 'feat/**'
   workflow_dispatch:
 
 jobs:
@@ -19,4 +21,5 @@ jobs:
 
       - name: Run application tests
         run: ./gradlew test
+
 
