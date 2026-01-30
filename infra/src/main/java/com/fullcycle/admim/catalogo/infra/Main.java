@@ -1,7 +1,6 @@
 package com.fullcycle.admim.catalogo.infra;
 
 import com.fullcycle.admim.catalogo.infra.configuration.WebServerConfig;
-import org.springframework.boot.EnvironmentPostProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.AbstractEnvironment;
