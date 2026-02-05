@@ -1,16 +1,21 @@
 package com.fullcycle.admim.catalogo.infra.category.persistence;
 
-import com.fullcycle.admim.catalogo.domain.category.Category;
-import com.fullcycle.admim.catalogo.domain.category.CategoryID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 
 import java.time.Instant;
 
 @Entity
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "category")
 public class CategoryJpaEntity {
 
@@ -35,9 +40,8 @@ public class CategoryJpaEntity {
     @Column(name = "deleted_at", columnDefinition = "DATETIME(6)")
     private Instant deletedAt;
 
-    public CategoryJpaEntity() {}
 
-    public CategoryJpaEntity(
+    public static CategoryJpaEntity from(
             final String id,
             final String name,
             final String description,
@@ -46,94 +50,16 @@ public class CategoryJpaEntity {
             final Instant updatedAt,
             final Instant deletedAt
     ) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.active = isActive;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
-
-    }
-    public CategoryJpaEntity from(final Category aCategory) {
 
         return new CategoryJpaEntity(
-                aCategory.getId().getValue(),
-                aCategory.getName(),
-                aCategory.getDescription(),
-                aCategory.isActive(),
-                aCategory.getCreatedAt(),
-                aCategory.getUpdatedAt(),
-                aCategory.getDeletedAt()
+                id,
+                name,
+                description,
+                isActive,
+                createdAt,
+                updatedAt,
+                deletedAt
         );
-    }
-
-        public Category toAggregate() {
-
-        return Category.with(
-                CategoryID.from(getId()),
-                getName(),
-                getDescription(),
-                isActive(),
-                getCreatedAt(),
-                getUpdatedAt(),
-                getDeletedAt()
-        );
-    }
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Instant getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Instant deletedAt) {
-        this.deletedAt = deletedAt;
     }
 
 }
