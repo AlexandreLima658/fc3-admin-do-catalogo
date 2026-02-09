@@ -3,7 +3,7 @@ package com.fullcycle.admim.catalogo.infra;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.repository.CrudRepository;
