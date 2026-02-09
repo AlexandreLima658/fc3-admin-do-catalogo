@@ -5,6 +5,8 @@ import com.fullcycle.admim.catalogo.domain.category.CategoryGateway;
 import com.fullcycle.admim.catalogo.domain.category.CategoryID;
 import com.fullcycle.admim.catalogo.domain.category.CategorySearchQuery;
 import com.fullcycle.admim.catalogo.domain.pagination.Pagination;
+import com.fullcycle.admim.catalogo.infra.category.persistence.CategoryJpaEntity;
+import com.fullcycle.admim.catalogo.infra.category.persistence.CategoryJpaMapper;
 import com.fullcycle.admim.catalogo.infra.category.persistence.CategoryJpaRepository;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +22,9 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Category create(Category aCategory) {
-        return null;
+    public Category create(final Category aCategory) {
+       final var category = repository.save(CategoryJpaMapper.toJpaEntity(aCategory));
+       return CategoryJpaMapper.toAggregate(category);
     }
 
     @Override
