@@ -23,9 +23,9 @@ public class CategoryMySQLGateway implements CategoryGateway {
 
     @Override
     public Category create(final Category aCategory) {
-       final var category = repository.save(CategoryJpaMapper.toJpaEntity(aCategory));
-       return CategoryJpaMapper.toAggregate(category);
+        return save(aCategory);
     }
+
 
     @Override
     public void deleteById(CategoryID anId) {
@@ -38,12 +38,17 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Category update(Category aCategory) {
-        return null;
+    public Category update(final Category aCategory) {
+        return save(aCategory);
     }
 
     @Override
     public Pagination<Category> findAll(CategorySearchQuery aQuery) {
         return null;
+    }
+
+    private Category save(final Category aCategory) {
+        final var category = repository.save(CategoryJpaMapper.toJpaEntity(aCategory));
+        return CategoryJpaMapper.toAggregate(category);
     }
 }
