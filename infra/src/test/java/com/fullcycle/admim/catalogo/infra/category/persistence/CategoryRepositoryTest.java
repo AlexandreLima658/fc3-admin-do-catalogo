@@ -2,7 +2,7 @@ package com.fullcycle.admim.catalogo.infra.category.persistence;
 
 
 import com.fullcycle.admim.catalogo.domain.category.Category;
-import com.fullcycle.admim.catalogo.infra.MySQLGatewayTest;
+import com.fullcycle.admim.catalogo.MySQLGatewayTest;
 import org.hibernate.PropertyValueException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
