@@ -9,6 +9,11 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
+import java.util.Objects;
+
+import static org.mockito.AdditionalAnswers.returnsFirstArg;
+import static org.mockito.ArgumentMatchers.any;
+
 @IntegrationTest
 public class CreateCategoryUseCaseIT {
 
@@ -71,7 +76,66 @@ public class CreateCategoryUseCaseIT {
         Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, notification.getErrors().get(0).message());
 
-        Mockito.verify(categoryGateway, Mockito.times(0)).create(Mockito.any());
+        Mockito.verify(categoryGateway, Mockito.times(0)).create(any());
+
+    }
+
+    @Test
+    public void givenAValidCommandWithInactiveCategory_whenCallsCreateCategory_shouldReturnInactiveCategoryId(){
+
+        final var expectedName = "Movies";
+        final var expectedDescription = "some description";
+        final var expectedIsActive = false;
+
+        Assertions.assertEquals(0, categoryJpaRepository.count());
+
+        final var aCommand = CreateCategoryCommand.with(
+                expectedName,
+                expectedDescription,
+                expectedIsActive
+        );
+
+        final var actualOutput = useCase.execute(aCommand).get();
+
+        Assertions.assertNotNull(actualOutput);
+        Assertions.assertNotNull(actualOutput.id());
+
+        Assertions.assertEquals(1, categoryJpaRepository.count());
+
+        final var actualCategory =
+                categoryJpaRepository.findById(actualOutput.id().getValue()).get();
+
+        Assertions.assertEquals(expectedName, actualCategory.getName());
+        Assertions.assertEquals(expectedDescription, actualCategory.getDescription());
+        Assertions.assertEquals(expectedIsActive, actualCategory.isActive());
+        Assertions.assertNotNull(actualCategory.getCreatedAt());
+        Assertions.assertNotNull(actualCategory.getUpdatedAt());
+        Assertions.assertNotNull(actualCategory.getDeletedAt());
+    }
+
+    @Test
+    public void givenAValidCommand_whenGatewayThrowsRandomException_shouldReturnAException(){
+
+        final var expectedName = "Movies";
+        final var expectedDescription = "some description";
+        final var expectedIsActive = true;
+        final var expectedErrorMessage = "Gateway error";
+        final var expectedErrorCount = 1;
+
+        final var aCommand = CreateCategoryCommand.with(
+                expectedName,
+                expectedDescription,
+                expectedIsActive
+        );
+
+        Mockito.doThrow(new IllegalStateException(expectedErrorMessage))
+                        .when(categoryGateway).create(any());
+
+        final var notification = useCase.execute(aCommand).getLeft();
+
+        Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
+        Assertions.assertEquals(expectedErrorMessage, notification.getErrors().get(0).message());
+
 
     }
 }
