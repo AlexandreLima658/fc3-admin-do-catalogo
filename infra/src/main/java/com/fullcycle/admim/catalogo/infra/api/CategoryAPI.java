@@ -1,16 +1,15 @@
 package com.fullcycle.admim.catalogo.infra.api;
 
 import com.fullcycle.admim.catalogo.domain.pagination.Pagination;
+import com.fullcycle.admim.catalogo.infra.category.models.CreateCategoryApiInput;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "categories")
 @Tag(name = "Categories")
@@ -26,7 +25,7 @@ public interface CategoryAPI {
         @ApiResponse(responseCode = "422", description = "Unprocessable error"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    ResponseEntity<?> createCategory();
+    ResponseEntity<?> createCategory(@RequestBody @Valid CreateCategoryApiInput input);
 
     @GetMapping
     @Operation(summary = "List all category paginated")
