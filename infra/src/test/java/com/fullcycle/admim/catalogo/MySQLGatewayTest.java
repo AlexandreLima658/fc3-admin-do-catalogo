@@ -14,9 +14,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @ActiveProfiles("test")
-@ComponentScan(includeFilters = {
-        @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*[MySQLGateway]")
-})
+@ComponentScan(
+        includeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*MySQLGateway"),
+        excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*ApiInput")
+)
 @DataJpaTest
 @ExtendWith(CleanUpExtension.class)
 public @interface MySQLGatewayTest { }
