@@ -100,7 +100,7 @@ public class CategoryAPITest {
         final var response = this.mvc.perform(request)
                 .andDo(print());
 
-        response.andExpect(status().isNoContent())
+        response.andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE));
 
 

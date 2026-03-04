@@ -2,6 +2,7 @@ package com.fullcycle.admim.catalogo.infra.api;
 
 import com.fullcycle.admim.catalogo.domain.pagination.Pagination;
 import com.fullcycle.admim.catalogo.infra.category.models.CreateCategoryApiInput;
+import com.fullcycle.admim.catalogo.infra.category.models.UpdateCategoryApiInput;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -42,4 +43,16 @@ public interface CategoryAPI {
             @RequestParam(name = "dir", required = false, defaultValue = "asc") final String direction
     );
 
+    @PutMapping(
+           value = "{id}",
+           consumes = MediaType.APPLICATION_JSON_VALUE,
+           produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(summary = "Updated category by identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Category Updated successfully"),
+            @ApiResponse(responseCode = "422", description = "Unprocessable error"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    ResponseEntity<?> updateById(@PathVariable String id, @RequestBody UpdateCategoryApiInput input);
 }
