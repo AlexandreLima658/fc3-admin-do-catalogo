@@ -3,14 +3,17 @@ package com.fullcycle.admim.catalogo.infra.api.controllers;
 import com.fullcycle.admim.catalogo.application.category.create.CreateCategoryCommand;
 import com.fullcycle.admim.catalogo.application.category.create.CreateCategoryOutput;
 import com.fullcycle.admim.catalogo.application.category.create.CreateCategoryUseCase;
+import com.fullcycle.admim.catalogo.application.category.retrieve.get.GetCategoryByIdUseCase;
 import com.fullcycle.admim.catalogo.application.category.update.UpdateCategoryCommand;
 import com.fullcycle.admim.catalogo.application.category.update.UpdateCategoryOutput;
 import com.fullcycle.admim.catalogo.application.category.update.UpdateCategoryUseCase;
 import com.fullcycle.admim.catalogo.domain.pagination.Pagination;
 import com.fullcycle.admim.catalogo.domain.validation.handler.Notification;
 import com.fullcycle.admim.catalogo.infra.api.CategoryAPI;
+import com.fullcycle.admim.catalogo.infra.category.models.CategoryApiOutput;
 import com.fullcycle.admim.catalogo.infra.category.models.CreateCategoryApiInput;
 import com.fullcycle.admim.catalogo.infra.category.models.UpdateCategoryApiInput;
+import com.fullcycle.admim.catalogo.infra.category.presenters.CategoryApiPresenters;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,13 +27,16 @@ public class CategoryController implements CategoryAPI {
 
     private final CreateCategoryUseCase createCategoryUseCase;
     private final UpdateCategoryUseCase updateCategoryUseCase;
+    private final GetCategoryByIdUseCase getCategoryByIdUseCase;
 
     public CategoryController(
             final CreateCategoryUseCase createCategoryUseCase,
-            final UpdateCategoryUseCase updateCategoryUseCase
+            final UpdateCategoryUseCase updateCategoryUseCase,
+            final GetCategoryByIdUseCase getCategoryByIdUseCase
     ) {
         this.createCategoryUseCase = Objects.requireNonNull(createCategoryUseCase);
-        this.updateCategoryUseCase = updateCategoryUseCase;
+        this.updateCategoryUseCase = Objects.requireNonNull(updateCategoryUseCase);
+        this.getCategoryByIdUseCase = Objects.requireNonNull(getCategoryByIdUseCase);
     }
 
     @Override
@@ -55,6 +61,11 @@ public class CategoryController implements CategoryAPI {
     @Override
     public Pagination<?> listCategories(String search, int page, int perPage, String sort, String direction) {
         return null;
+    }
+
+    @Override
+    public CategoryApiOutput getById(final String id) {
+        return CategoryApiPresenters.present(this.getCategoryByIdUseCase.execute(id));
     }
 
     @Override
