@@ -1,6 +1,7 @@
 package com.fullcycle.admim.catalogo.infra.api;
 
 import com.fullcycle.admim.catalogo.domain.pagination.Pagination;
+import com.fullcycle.admim.catalogo.infra.category.models.CategoryApiOutput;
 import com.fullcycle.admim.catalogo.infra.category.models.CreateCategoryApiInput;
 import com.fullcycle.admim.catalogo.infra.category.models.UpdateCategoryApiInput;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,6 +43,19 @@ public interface CategoryAPI {
             @RequestParam(name = "sort", required = false, defaultValue = "name") final String sort,
             @RequestParam(name = "dir", required = false, defaultValue = "asc") final String direction
     );
+
+    @GetMapping(
+            value = "{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(summary = "Get a category by it's  identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Category retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Category was not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    CategoryApiOutput getById(@PathVariable String id);
 
     @PutMapping(
            value = "{id}",
