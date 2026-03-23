@@ -15,7 +15,7 @@ plugins {
     id 'org.flywaydb.flyway' version '8.5.10'
 }
 
-group = 'com.fullcycle.admim.catalogo.infra'
+group = 'com.fullcycle.admin.catalogo.infra'
 version = '1.0-SNAPSHOT'
 
 
